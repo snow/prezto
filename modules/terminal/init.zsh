@@ -52,7 +52,7 @@ function _terminal-set-titles-with-command {
     jobs "$job_name" 2> /dev/null > >(
       read index discarded
       # The index is already surrounded by brackets: [1].
-      _terminal-set-titles-with-command "${(e):-\$jobtexts_from_parent_shell$index}"
+      _terminal-set-titles-with-command "> ${(e):-\$jobtexts_from_parent_shell$index}"
     )
   else
     # Set the command name, or in the case of sudo or ssh, the next command.
@@ -61,10 +61,10 @@ function _terminal-set-titles-with-command {
     unset MATCH
 
     if [[ "$TERM" == screen* ]]; then
-      set-multiplexer-title "$truncated_cmd"
+      set-multiplexer-title "> $truncated_cmd"
     fi
-    set-tab-title "$truncated_cmd"
-    set-window-title "$cmd"
+    set-tab-title "> $truncated_cmd"
+    set-window-title "> $cmd"
   fi
 }
 
@@ -81,7 +81,7 @@ function _terminal-set-titles-with-path {
   if [[ "$TERM" == screen* ]]; then
     set-multiplexer-title "$truncated_path"
   fi
-  set-tab-title "$truncated_path"
+  set-tab-title ""
   set-window-title "$abbreviated_path"
 }
 
